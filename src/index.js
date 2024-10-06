@@ -1,6 +1,6 @@
 // Iteration 1: Multiply Array Elements by Two
 function multiplyByTwo(arr) {
-  // your code here
+  return arr.map(el => el*2);
 }
 
 /*
@@ -11,7 +11,14 @@ Expected Output: [2, 4, 6, 8, 10]
 
 // Iteration 2: Videogame Discount
 function getVideogamesWithDiscount(arr) {
-  // your code here
+  const discountedVideogames = arr.map((videogame) => {
+    return {
+      name: videogame.name,
+      price: videogame.price,
+      discountedPrice: videogame.price * 0.90
+    }
+  });
+  return discountedVideogames;
 }
 
 /*
@@ -36,7 +43,7 @@ Expected Output:
 
 // Iteration 3: Filter Books by Page Count
 function getBooks(arr) {
-  // your code here
+  return arr.filter(book => book.pages >=300);
 }
 
 /*
@@ -59,9 +66,19 @@ Expected Output:
 
 // Iteration 4: Total Quantity of Products
 function getTotalQuantity(arr) {
-  // your code here
+  const sumOfProducts = arr.reduce((acc, product) => {
+    return acc + product.quantity;
+  }, 0);
+  return sumOfProducts;
 }
 
+getTotalQuantity([
+  { name: "Samsung Smart TV", quantity: 30 },
+  { name: "iPhone 12", quantity: 20 },
+  { name: "Macbook Pro", quantity: 10 },
+  { name: "Lenovo ThinkPad", quantity: 40 },
+  { name: "Dell XPS", quantity: 50 },
+]);
 /*
 Example:
 Input:
@@ -77,7 +94,15 @@ Expected Output: 150
 
 // Iteration 5: Average Price of Electronics
 function getAveragePrice(arr) {
-  // your code here
+  const electronics = arr.filter((product)=>{
+    return product.category === "electronics";
+  })
+
+  const sumOfPrices = electronics.reduce((acc, item)=>{
+    return acc + item.price;
+  }, 0)
+
+  return sumOfPrices / electronics.length;
 }
 
 /*
@@ -101,8 +126,18 @@ Explanation: Average price of electronics = (500 + 1000 + 2000 + 300 + 400) / 5 
 
 // Iteration 6: Common Elements Between Arrays
 function getCommonElements(arr1, arr2) {
-  // your code here
+  const arrayOfCommonElements = [];
+
+  arr1.forEach((element)=>{
+    if(arr2.includes(element) && !arrayOfCommonElements.includes(element)){
+      arrayOfCommonElements.push(element);
+    } 
+  })
+  arrayOfCommonElements.sort((a, b) => b - a);
+  return arrayOfCommonElements;
 }
+
+getCommonElements([1, 2, 3, 4, 5], [3, 4, 5, 6, 7]);
 
 /*
 Example:
@@ -114,9 +149,25 @@ Expected Output: [5, 4, 3]
 
 // Iteration 7: Longest Consecutive Sequence
 function getLongestConsecutiveSequence(arr) {
-  // your code here
+  const sortedArray = arr.sort((a, b) => a - b);
+
+  let longestConsecutiveSequence = [];
+  let currentLongest = [sortedArray[0]];
+
+  for (let i = 0; i < sortedArray.length; i++){
+    if (sortedArray[i] === (sortedArray[i+1]-1)){
+      currentLongest.push(sortedArray[i+1]);
+    }else{
+      if (currentLongest.length > longestConsecutiveSequence.length){
+        longestConsecutiveSequence = currentLongest;
+      }
+      currentLongest = [];
+    }
+  }
+  return longestConsecutiveSequence;
 }
 
+getLongestConsecutiveSequence([1, 3, 2, 4, 5, 7, 8, 9]);
 /*
 Example:
 Input: [1, 3, 2, 4, 5, 7, 8, 9]
